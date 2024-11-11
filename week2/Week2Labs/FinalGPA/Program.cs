@@ -26,11 +26,25 @@
             int course4Grade = gradeB;
             int course5Grade = gradeA;
 
+           
+            int totalCreditHours = course1Credit + course2Credit + course3Credit + course4Credit + course5Credit;
+            int totalGradePoints = 0;
+            totalGradePoints += course1Credit * course1Grade;
+            totalGradePoints += course2Credit * course2Grade;
+            totalGradePoints += course3Credit * course3Grade;
+            totalGradePoints += course4Credit * course4Grade;
+            totalGradePoints += course5Credit * course5Grade;
+
+            Console.WriteLine($"{totalGradePoints} {totalCreditHours}");
+
             Console.WriteLine($"{course1Name} {course1Grade} {course1Credit}");
             Console.WriteLine($"{course2Name} {course2Grade} {course2Credit}");
             Console.WriteLine($"{course3Name} {course3Grade} {course3Credit}");
             Console.WriteLine($"{course4Name} {course4Grade} {course4Credit}");
             Console.WriteLine($"{course5Name} {course5Grade} {course5Credit}");
+
+
+
         }
     }
 }
