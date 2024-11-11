@@ -49,10 +49,31 @@
             decimal jeongScore = jeongSum / (decimal)currentAssignments; ;
 
             Console.WriteLine("Score:");
-            Console.WriteLine($"{"Sophia:",-10} {sophiaScore} {"A"}");
-            Console.WriteLine($"{"Nicolas:",-10} {nicolasScore} {"B"}");
-            Console.WriteLine($"{"Zahirah:",-10} {zahirahScore} {"B"}");
-            Console.WriteLine($"{"Jeong:",-10} {jeongScore} {"A"}");
+            Console.WriteLine($"{"Sophia:",-10} {sophiaScore} {getGrade(sophiaScore)}");
+            Console.WriteLine($"{"Nicolas:",-10} {nicolasScore} {getGrade(nicolasScore)}");
+            Console.WriteLine($"{"Zahirah:",-10} {zahirahScore} {getGrade(zahirahScore)}");
+            Console.WriteLine($"{"Jeong:",-10} {jeongScore} {getGrade(jeongScore)}");
+
+            String getGrade(decimal score)
+            {
+                return score switch
+                {
+                    >= 97 and <= 100 => "A+",
+                    >= 93 and < 97 => "A",
+                    >= 90 and < 93 => "A-",
+                    >= 87 and < 90 => "B+",
+                    >= 83 and < 87 => "B",
+                    >= 80 and < 83 => "B-",
+                    >= 77 and < 80 => "C+",
+                    >= 73 and < 77 => "C",
+                    >= 70 and < 73 => "C-",
+                    >= 67 and < 70 => "D+",
+                    >= 63 and < 67 => "D",
+                    >= 60 and < 63 => "D-",
+                    < 60 => "F",
+                    _ => "Invalid"
+                };
+            }
         }
     }
 }
