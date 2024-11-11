@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FtoC", "FtoC\FtoC.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentGrading", "StudentGrading\StudentGrading.csproj", "{5FC87BDB-FF5A-4055-BB7F-4B4F79AB7143}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalGPA", "FinalGPA\FinalGPA.csproj", "{8BA61B86-A688-4A48-8D1C-F05D4F217306}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5FC87BDB-FF5A-4055-BB7F-4B4F79AB7143}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FC87BDB-FF5A-4055-BB7F-4B4F79AB7143}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FC87BDB-FF5A-4055-BB7F-4B4F79AB7143}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BA61B86-A688-4A48-8D1C-F05D4F217306}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BA61B86-A688-4A48-8D1C-F05D4F217306}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BA61B86-A688-4A48-8D1C-F05D4F217306}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BA61B86-A688-4A48-8D1C-F05D4F217306}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
