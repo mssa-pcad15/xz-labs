@@ -54,6 +54,8 @@
             Console.WriteLine($"{"Zahirah:",-10} {zahirahScore} {getGrade(zahirahScore)}");
             Console.WriteLine($"{"Jeong:",-10} {jeongScore} {getGrade(jeongScore)}");
 
+            // | this is a local method for one time usage. a local method is typically used for one-time or limited usage within the
+            // scope of the containing method. Local methods are defined inside other methods and have limited visibility.
             String getGrade(decimal score)
             {
                 return score switch
