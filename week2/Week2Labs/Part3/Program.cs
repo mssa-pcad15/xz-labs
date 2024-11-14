@@ -10,7 +10,8 @@
             //Mod3.SwitchCase();
             //Mod3.Challenge();
             //Mod4.forLoop();
-            FizzBuzz.FB();
-        }
+            //FizzBuzz.FB();
+            WhileChallenge.HeroMonster();
+            }
     }
 }
