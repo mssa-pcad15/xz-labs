@@ -8,7 +8,9 @@
             //Console.WriteLine($"Access static member: {VariableTest.StaticVar}");
             //Mod2.Challenge();
             //Mod3.SwitchCase();
-            Mod3.Challenge();
+            //Mod3.Challenge();
+            //Mod4.forLoop();
+            FizzBuzz.FB();
         }
     }
 }
