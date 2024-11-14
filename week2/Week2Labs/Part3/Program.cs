@@ -6,7 +6,9 @@
         {
             //Mod1.Unit1();
             //Console.WriteLine($"Access static member: {VariableTest.StaticVar}");
-            Mod2.Challenge();
+            //Mod2.Challenge();
+            //Mod3.SwitchCase();
+            Mod3.Challenge();
         }
     }
 }
