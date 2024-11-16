@@ -12,7 +12,8 @@
             //Mod4.forLoop();
             //FizzBuzz.FB();
             //WhileChallenge.HeroMonster();
-            P1ValidateIntInput.EnterValidInput();
+            //P1ValidateIntInput.EnterValidInput();
+            P2ValidStringInput.EnterStringInput();
             }
     }
 }
