@@ -13,7 +13,8 @@
             //FizzBuzz.FB();
             //WhileChallenge.HeroMonster();
             //P1ValidateIntInput.EnterValidInput();
-            P2ValidStringInput.EnterStringInput();
-            }
+            //P2ValidStringInput.EnterStringInput();
+            P3ProcessStringArray.ProcessStringArrayContent();
+                }
     }
 }
