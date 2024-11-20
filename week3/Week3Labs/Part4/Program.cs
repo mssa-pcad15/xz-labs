@@ -15,20 +15,28 @@
             //Mod2.ExerciseDataConversion();
             //Challenge1.CombineStringArray();
             //Challenge2.OutputSpecificNumberTypes();
-            Mod3.ArrayMethods();
+            //Mod3.ArrayMethods();
+            //Challenge3ReverseEachWord.ReverseEachWord();
+            //Challenge4SortStringTagErrors.SortStringTagErrors();
+            //Challenge5StringFormat.StringFormat();
+            Challenge6ExtractAndReplace.ExtractAndReplace();
+            //Mod5.StringMethods1();
 
             // | pass by value
+            /*
             int a = 0;
             int b = a;
             a += 5;
             Console.WriteLine($"a:{a}, b:{b}"); //output: a:5, b:0
+            */
 
             // | pass by reference
+            /*
             int[] c = [0, 1];
             int[] d = c;
             c[0] += 5;
             Console.WriteLine($"c: {c[0]}, d:{d[0]}"); //output: a:5, d:5
-
+            */
         }
     }
 }
