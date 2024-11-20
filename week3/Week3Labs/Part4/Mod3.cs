@@ -16,21 +16,22 @@ namespace Part4
             {
                 Console.WriteLine(i); //output: 7, 5
             }
-            foreach(int i in arrayVar[..2])
+            foreach(int i in arrayVar[..2]) 
             {
-                Console.WriteLine(i);
+                Console.WriteLine(i); //output: 7, 5
             }
             foreach (int i in arrayVar[5..])
             {
-                Console.WriteLine(i);
+                Console.WriteLine(i); //output: 6
             }
-            foreach(int i in arrayVar[..^0]) //count from the back
+            foreach(int i in arrayVar[..^0]) //^0 represents the end of the array (exclusive).
             {
-                Console.WriteLine(i);
+                Console.WriteLine(i); //output: 7, 5, 8, 11, 3, 6
             }
-            foreach (int i in arrayVar[^2..]) //output: 3,6
+            foreach (int i in arrayVar[^2..]) //^2 represents second-to-last element in the array
+            //^2.. specifies a range starting from the second-to-last element and going to the end of the array.
             {
-                Console.WriteLine(i);
+                Console.WriteLine(i); //output: 3, 6
             }
 
             int[] subArray = arrayVar[3..6]; //return a new array, not a reference
@@ -98,6 +99,27 @@ namespace Part4
                 Console.WriteLine($"-- {pallet}");
             }
 
+
+            //| Reverse() and Join() methods
+            string value = "abc123";
+            char[] valueArray = value.ToCharArray();
+            Array.Reverse(valueArray);
+            string result = new String(valueArray);
+            result = String.Join(",", valueArray); //output: 3,2,1,c,b,a
+            Console.WriteLine(result);
+
+            // | Split() method
+            string value1 = "abc123";
+            char[] valueArray1 = value.ToCharArray();
+            Array.Reverse(valueArray1);
+            // string result = new string(valueArray);
+            string result1 = String.Join(",", valueArray1);
+            Console.WriteLine(result1);
+            string[] items = result1.Split(',');
+            foreach (string item in items)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
