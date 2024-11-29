@@ -23,6 +23,69 @@ namespace FundamentalsTest1
             //Assert
             Assert.AreEqual(expect, actual);
         }
+
+        [TestMethod]
+        public void ADeckShouldAlwaysHave52Cards()
+        { //step1: add a new public class "Deck.cs" under Fundamentals1. This class must have a
+          //  static int member NumberOfCards that is assigned to value of 52
+
+            //Arrange
+            int actual = Deck.NumberOfCards;
+            int expect = 52;
+
+            // there is no Act
+
+            //Assert
+            Assert.AreEqual(expect, actual);
+        }
+
+        [TestMethod]
+        public void NewDeckOfCardWillHaveCardsInSuitToRank()
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void ADeckCanBeShuffled()
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void DealACardShouldReturnNextCardInTheDeck()
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+        }
+
+        [TestMethod]
+        public void PrintsCardsInDeck()
+        {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
+        }
     }
 
 
