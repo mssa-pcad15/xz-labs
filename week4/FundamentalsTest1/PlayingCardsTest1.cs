@@ -70,12 +70,17 @@ namespace FundamentalsTest1
         public void ADeckCanBeShuffled()
         {
             //Arrange
-
+            Deck deckA = new Deck();
+            Deck deckB = new Deck();
 
             //Act
-
+            deckA.Shuffle();
 
             //Assert
+            Assert.AreNotEqual(deckA, deckB); //This testing is dangerous because AreNotEqual compares values, 
+                         //while deckA and deckB are two different objects, hence even if before shuffling, the
+                         //AreNotEqual method will always evaluate to true.
+            Assert.IsFalse(deckA.IsInNewDeckOrder);
         }
 
         [TestMethod]

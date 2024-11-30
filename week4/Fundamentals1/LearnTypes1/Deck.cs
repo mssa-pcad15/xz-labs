@@ -14,7 +14,9 @@ namespace Fundamentals1.LearnTypes1
 
         // | bool property
         // flag indicates whether Deck has been shuffled
-        public bool IsInNewDeckOrder { get; } //default value for bool is "false"
+        //"private set": The property value can only be set privately (inside the same class where the property
+        //is declared).
+        public bool IsInNewDeckOrder { get; private set; } //default value for bool is "false"
         /*********** End: for test -- NewDeckOfCardWillHaveCardsInSuitToRankOrder() *********/
 
 
@@ -49,5 +51,18 @@ namespace Fundamentals1.LearnTypes1
         public Card Deal() => GetCardByIndex(currentCard++);
         /*********** End: for test -- DealACardShouldReturnNextCardInTheDeck() *********/
 
+
+        /*********** Begin: for test -- ADeckCanBeShuffled() *********/
+        public void Shuffle()
+        {
+            Random random = new Random();
+            for (int i=0; i<1000; i++){
+                int from = random.Next(52);
+                int to = random.Next(52);
+                (_cards[from], _cards[to]) = (_cards[to], _cards[from]);
+            }
+            IsInNewDeckOrder = false;
+        }
+        /*********** End: for test -- ADeckCanBeShuffled() *********/
     }
 }
