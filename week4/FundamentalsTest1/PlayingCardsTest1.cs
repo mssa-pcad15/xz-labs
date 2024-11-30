@@ -90,8 +90,8 @@ namespace FundamentalsTest1
             Deck deckA = new Deck();
 
             //Act
-            deckA.Deal();
-            deckA.Deal();
+            _ = deckA.Deal(); //"_" indicates discarding the return value
+            _ = deckA.Deal();
             Card thirdCard = deckA.Deal();
 
             //Assert
@@ -101,11 +101,19 @@ namespace FundamentalsTest1
         }
 
 
-        [TestMethod()]
+        [TestMethod()] //[TestMethod()] is the same as [TestMethod]
+        /* | This attribute indicates that the test method is expected to throw an IndexOutOfRangeException. If
+         * exception is not thrown, the test will fail.
+         */
         [ExpectedException(typeof(IndexOutOfRangeException))]
         public void CallDealBeyondLastCardShouldThrowIndexOutOfRangeException()
         {
-
+           //var keyword for type inference. The compiler automatically determines the type of deckA based on the
+           //right-hand side (new Deck()), so var is equivalent to writing Deck deckA = new Deck();
+           var deckA = new Deck();
+            for (int i = 0; i < 53; i++)
+                _ = deckA.Deal();
+             
         }
 
 
