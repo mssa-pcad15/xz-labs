@@ -9,8 +9,29 @@ namespace Fundamentals1.LearnTypes1
     public class Deck
     {
         public const int NumberOfCards = 52;
-        
 
-        
+        private Card[] _cards = new Card[NumberOfCards];//create an array which is Card type and assgin the capacity as 52
+
+        // | bool property
+        // flag indicates whether Deck has been shuffled
+        public bool IsInNewDeckOrder { get; } //default value for bool is "false"
+
+
+        // | constructor
+        public Deck() //in constructor, we create 52 card in Suit/Rank order and set IsInNewDeckOrder flag to true
+            {
+            int cardPosition = 0; //used to point at each card position.
+
+            for (int i = 1; i <= 4; i++) { 
+            
+                foreach (CardRank r in Enum.GetValues<CardRank>()){ //get the int value from CardRank Enum
+                    this._cards[cardPosition++] = new Card { Suit = (CardSuit)i, Rank = r };
+                }
+            }
+            IsInNewDeckOrder = true;
+        }
+
+        // | GetCardByIndex() method
+        public Card GetCardByIndex(int index) => _cards[index];
     }
 }
