@@ -81,14 +81,33 @@ namespace FundamentalsTest1
         [TestMethod]
         public void DealACardShouldReturnNextCardInTheDeck()
         {
-            //Arrange
+            //1. Initialize a private field to serve as counter to number of cards dealt
+            //2. Write an instance method which deal with the next card
+            //3. Write a method called Deal() to return the card according to the counter
+            //4. Write a get property to indicate how many cards left in the deck
 
+            //Arrange
+            Deck deckA = new Deck();
 
             //Act
-
+            deckA.Deal();
+            deckA.Deal();
+            Card thirdCard = deckA.Deal();
 
             //Assert
+            Card expect = new Card { Rank=CardRank.Three, Suit=CardSuit.Spade};
+            Assert.AreEqual(expect, thirdCard); //test: if the card I dealt is the same as the expected card I set
+            Assert.AreEqual(deckA.RemainingCards, 49); //test: took three cards, left 49 cards
         }
+
+
+        [TestMethod()]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void CallDealBeyondLastCardShouldThrowIndexOutOfRangeException()
+        {
+
+        }
+
 
         [TestMethod]
         public void PrintsCardsInDeck()
@@ -102,7 +121,4 @@ namespace FundamentalsTest1
             //Assert
         }
     }
-
-
-
 }
