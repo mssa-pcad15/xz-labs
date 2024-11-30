@@ -8,13 +8,22 @@ namespace Fundamentals1.LearnTypes1
 {
     public class Deck
     {
+        /*********** Begin: for test -- NewDeckOfCardWillHaveCardsInSuitToRankOrder() *********/
         public const int NumberOfCards = 52;
-
         private Card[] _cards = new Card[NumberOfCards];//create an array which is Card type and assgin the capacity as 52
 
         // | bool property
         // flag indicates whether Deck has been shuffled
         public bool IsInNewDeckOrder { get; } //default value for bool is "false"
+        /*********** End: for test -- NewDeckOfCardWillHaveCardsInSuitToRankOrder() *********/
+
+
+
+        /*********** Begin: for test -- DealACardShouldReturnNextCardInTheDeck() *********/
+        //1. Initialize a private field to serve as counter to number of cards dealt
+        private int currentCard = 0;
+        public int RemainingCards => NumberOfCards - currentCard; //A property with implicit "get" method.
+        /*********** End: for test -- DealACardShouldReturnNextCardInTheDeck() *********/
 
 
         // | constructor
@@ -33,5 +42,12 @@ namespace Fundamentals1.LearnTypes1
 
         // | GetCardByIndex() method
         public Card GetCardByIndex(int index) => _cards[index];
+
+
+        /*********** Begin: for test -- DealACardShouldReturnNextCardInTheDeck() *********/
+        //2. Write an instance method which deal with the next card
+        public Card Deal() => GetCardByIndex(currentCard++);
+        /*********** End: for test -- DealACardShouldReturnNextCardInTheDeck() *********/
+
     }
 }
