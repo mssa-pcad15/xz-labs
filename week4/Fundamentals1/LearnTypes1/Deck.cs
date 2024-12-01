@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fundamentals1.LearnTypes1
 {
-    public class Deck
+    public class Deck : IEquatable<Deck>
     {
         /*********** Begin: for test -- NewDeckOfCardWillHaveCardsInSuitToRankOrder() *********/
         public const int NumberOfCards = 52;
@@ -63,6 +63,26 @@ namespace Fundamentals1.LearnTypes1
             }
             IsInNewDeckOrder = false;
         }
+
+        public override string ToString()
+        {
+            return string.Join(',', _cards);
+        }
+
+        public bool Equals(Deck? other)
+        {
+            if (other == null) return false;
+            for (int i = 0; i < NumberOfCards; i++)
+            {
+                Card a = this.Deal();
+                Card b = other.Deal();
+                if (a != b) return false; //in Card struct, "record" allows member comparison
+            }
+            return true;
+        }
         /*********** End: for test -- ADeckCanBeShuffled() *********/
+
+
+
     }
 }

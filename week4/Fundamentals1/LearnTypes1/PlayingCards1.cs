@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Fundamentals1.LearnTypes1
 {
-    public struct Card
+    public record struct Card : IComparable<Card>
     {
        public CardSuit Suit { get; set; } //"CardSuit": enum, "Suit": an enum object
        public CardRank Rank { get; set; }
+
+
+        //Same code as -- public int CompareTo(Card other) => this.Rank.CompareTo(other.Rank);
+        public int CompareTo(Card other)
+        {
+            return this.Rank.CompareTo(other.Rank);
+        }
 
         /*
          * Create a ToString() method to print suits
@@ -70,6 +78,28 @@ namespace Fundamentals1.LearnTypes1
         Club=3,
         Diamond=4
     }
+
+
+    public class RankOnlyComparer : IComparer<Card>
+    {
+        public int Compare (Card x, Card y)
+        {
+            return x.Rank.CompareTo(y.Rank); //CompareTo is a built-in enum method
+        }
+    }
+
+    public class RankSuitComparer : IComparer<Card> 
+    {
+        public int Compare(Card x, Card y) {
+            int valX = (int)x.Suit * 100 + (int)x.Rank;
+            int valY = (int)y.Suit * 100 + (int)x.Rank;
+
+            return valX.CompareTo(valY);
+        }
+    }
+
+
+
 
     
 }
