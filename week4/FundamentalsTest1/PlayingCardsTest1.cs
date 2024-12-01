@@ -118,6 +118,31 @@ namespace FundamentalsTest1
 
 
         [TestMethod]
+        public void SortCardsWithSuitAndRankOrder()
+        {
+            //Arrange
+            Card[] fiveCards = new Card[]
+            {
+                new Card { Rank = CardRank.Ace, Suit = CardSuit.Spade },
+                new Card { Rank = CardRank.Ace, Suit = CardSuit.Heart },
+                new Card { Rank = CardRank.Ace, Suit = CardSuit.Diamond },
+                new Card { Rank = CardRank.Five, Suit = CardSuit.Club },
+                new Card { Rank = CardRank.Seven, Suit = CardSuit.Club }
+            };
+
+            //Act
+            Array.Sort(fiveCards, new SuitRankComparer());
+            //foreach (Card c in fiveCards)
+            //    Console.WriteLine(c);
+
+            //Assert
+            Assert.AreEqual(fiveCards[0], new Card { Rank = CardRank.Ace, Suit = CardSuit.Spade });
+            Assert.AreEqual(fiveCards[1], new Card { Rank = CardRank.Ace, Suit = CardSuit.Heart });
+            Assert.AreEqual(fiveCards[2], new Card { Rank = CardRank.Five, Suit = CardSuit.Club });
+        }
+
+
+        [TestMethod]
         public void PrintsCardsInDeck()
         {
             //Arrange
@@ -130,30 +155,6 @@ namespace FundamentalsTest1
         }
 
 
-        [TestMethod]
-        public void SortCards()
-        {
-            //Arrange
-            Card[] fiveCards = new Card[]
-            {
-                new Card { Rank = CardRank.Five, Suit = CardSuit.Spade },
-                new Card { Rank = CardRank.Nine, Suit = CardSuit.Spade },
-                new Card { Rank = CardRank.Two, Suit = CardSuit.Spade },
-                new Card { Rank = CardRank.Jack, Suit = CardSuit.Spade },
-                new Card { Rank = CardRank.Ace, Suit = CardSuit.Spade }
-            };
 
-            //Act
-            Array.Sort(fiveCards);
-            //foreach (Card c in fiveCards)
-            //    Console.WriteLine(c);
-
-            //Assert
-            Assert.AreEqual(fiveCards[0], new Card { Rank = CardRank.Ace, Suit = CardSuit.Spade });
-            Assert.AreEqual(fiveCards[1], new Card { Rank = CardRank.Two, Suit = CardSuit.Spade });
-            Assert.AreEqual(fiveCards[2], new Card { Rank = CardRank.Five, Suit = CardSuit.Spade });
-            Assert.AreEqual(fiveCards[3], new Card { Rank = CardRank.Nine, Suit = CardSuit.Spade });
-            Assert.AreEqual(fiveCards[4], new Card { Rank = CardRank.Jack, Suit = CardSuit.Spade });
-        }
     }
 }

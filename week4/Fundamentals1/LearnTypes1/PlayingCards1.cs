@@ -16,7 +16,8 @@ namespace Fundamentals1.LearnTypes1
         //Same code as -- public int CompareTo(Card other) => this.Rank.CompareTo(other.Rank);
         public int CompareTo(Card other)
         {
-            return this.Rank.CompareTo(other.Rank);
+            //return this.Rank.CompareTo(other.Rank); 
+            return new RankOnlyComparer().Compare(this, other);
         }
 
         /*
@@ -88,7 +89,7 @@ namespace Fundamentals1.LearnTypes1
         }
     }
 
-    public class RankSuitComparer : IComparer<Card> 
+    public class SuitRankComparer : IComparer<Card> 
     {
         public int Compare(Card x, Card y) {
             int valX = (int)x.Suit * 100 + (int)x.Rank;
