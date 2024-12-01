@@ -1,9 +1,4 @@
 ﻿using Fundamentals1.LearnTypes1;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FundamentalsTest1
 {
@@ -14,7 +9,7 @@ namespace FundamentalsTest1
         public void CardToStringPrintsUnicode()
         {
             //Arrange
-            Card aceOfSpade = new Card() { Rank=CardRank.Ace, Suit=CardSuit.Spade  };
+            Card aceOfSpade = new Card() { Rank = CardRank.Ace, Suit = CardSuit.Spade };
             string expect = "♠1"; //tested with ♠11, which is SpadeJack, passed the test
 
             //Act
@@ -41,8 +36,8 @@ namespace FundamentalsTest1
 
         [TestMethod]
         //here the order refers to a deck of card starts from spade and ace, ends with Diamond and King
-        public void NewDeckOfCardWillHaveCardsInSuitToRankOrder() 
-        { 
+        public void NewDeckOfCardWillHaveCardsInSuitToRankOrder()
+        {
             //Idea:
             // 1. declare private Card[] that has capacity to hold NumberOfCards
             // 2. In the constructor of Deck class, use 2 loops, where outer loop enumerates Suit
@@ -53,7 +48,7 @@ namespace FundamentalsTest1
             //Arrange
             Deck newDeck = new Deck();
             Card actualStart = newDeck.GetCardByIndex(0); //leaky implementation. "actual" value comes from the current program I am writing
-            Card expectStart = new Card() { Suit=CardSuit.Spade, Rank=CardRank.Ace };
+            Card expectStart = new Card() { Suit = CardSuit.Spade, Rank = CardRank.Ace };
 
             Card actualEnd = newDeck.GetCardByIndex(51); //leaky implementation. 
             Card expectEnd = new Card() { Suit = CardSuit.Diamond, Rank = CardRank.King };
@@ -78,8 +73,8 @@ namespace FundamentalsTest1
 
             //Assert
             Assert.AreNotEqual(deckA, deckB); //This testing is dangerous because AreNotEqual compares values, 
-                         //while deckA and deckB are two different objects, hence even if before shuffling, the
-                         //AreNotEqual method will always evaluate to true.
+                                              //while deckA and deckB are two different objects, hence even if before shuffling, the
+                                              //AreNotEqual method will always evaluate to true.
             Assert.IsFalse(deckA.IsInNewDeckOrder);
         }
 
@@ -100,7 +95,7 @@ namespace FundamentalsTest1
             Card thirdCard = deckA.Deal();
 
             //Assert
-            Card expect = new Card { Rank=CardRank.Three, Suit=CardSuit.Spade};
+            Card expect = new Card { Rank = CardRank.Three, Suit = CardSuit.Spade };
             Assert.AreEqual(expect, thirdCard); //test: if the card I dealt is the same as the expected card I set
             Assert.AreEqual(deckA.RemainingCards, 49); //test: took three cards, left 49 cards
         }
@@ -113,12 +108,12 @@ namespace FundamentalsTest1
         [ExpectedException(typeof(IndexOutOfRangeException))]
         public void CallDealBeyondLastCardShouldThrowIndexOutOfRangeException()
         {
-           //var keyword for type inference. The compiler automatically determines the type of deckA based on the
-           //right-hand side (new Deck()), so var is equivalent to writing Deck deckA = new Deck();
-           var deckA = new Deck();
+            //var keyword for type inference. The compiler automatically determines the type of deckA based on the
+            //right-hand side (new Deck()), so var is equivalent to writing Deck deckA = new Deck();
+            var deckA = new Deck();
             for (int i = 0; i < 53; i++)
                 _ = deckA.Deal();
-             
+
         }
 
 
@@ -132,6 +127,33 @@ namespace FundamentalsTest1
 
 
             //Assert
+        }
+
+
+        [TestMethod]
+        public void SortCards()
+        {
+            //Arrange
+            Card[] fiveCards = new Card[]
+            {
+                new Card { Rank = CardRank.Five, Suit = CardSuit.Spade },
+                new Card { Rank = CardRank.Nine, Suit = CardSuit.Spade },
+                new Card { Rank = CardRank.Two, Suit = CardSuit.Spade },
+                new Card { Rank = CardRank.Jack, Suit = CardSuit.Spade },
+                new Card { Rank = CardRank.Ace, Suit = CardSuit.Spade }
+            };
+
+            //Act
+            Array.Sort(fiveCards);
+            //foreach (Card c in fiveCards)
+            //    Console.WriteLine(c);
+
+            //Assert
+            Assert.AreEqual(fiveCards[0], new Card { Rank = CardRank.Ace, Suit = CardSuit.Spade });
+            Assert.AreEqual(fiveCards[1], new Card { Rank = CardRank.Two, Suit = CardSuit.Spade });
+            Assert.AreEqual(fiveCards[2], new Card { Rank = CardRank.Five, Suit = CardSuit.Spade });
+            Assert.AreEqual(fiveCards[3], new Card { Rank = CardRank.Nine, Suit = CardSuit.Spade });
+            Assert.AreEqual(fiveCards[4], new Card { Rank = CardRank.Jack, Suit = CardSuit.Spade });
         }
     }
 }
