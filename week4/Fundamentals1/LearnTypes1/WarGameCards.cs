@@ -14,6 +14,8 @@ namespace Fundamentals1.LearnTypes1
         public Card[] InPlayBatch { get; private set; }
         public Card[] StandbyBatch { get; private set; }
 
+        public event EventHandler SwapBatch;
+        private int currentCardPointer = 0;
 
         // | Constructor, to initialize 2 batches of 6 Decks shuffled
         public WarGameCards()
@@ -24,7 +26,27 @@ namespace Fundamentals1.LearnTypes1
             ShuffleBatch(_batches![1]);
             InPlayBatch = _batches![0];
             StandbyBatch = _batches![1];
+            this.SwapBatch += WarGameCards_SwapBatch; //when mouse over "SwapBatch", it shows a lighting sign, indicates it's not a method nor
+                                                      //property, it's an event, the "WarGameCards_SwapBatch" is now subscribe to the SwapBatch event.
+        }
 
+        private void WarGameCards_SwapBatch(object? sender, EventArgs e)
+        {
+            (InPlayBatch, StandbyBatch) = (StandbyBatch, InPlayBatch);
+            currentCardPointer = 0;
+        }
+
+        public Card Deal() //return type Card, method name Deal()
+        {
+            int cardIndex = currentCardPointer++;
+            Card nextCard = InPlayBatch[cardIndex];
+            if (cardIndex > 0.9 * InPlayBatch.Length)
+            {
+                SwapBatch?.Invoke(this, new EventArgs());//this raise event, the publisher. There might not be anyone who subscribe the event.
+                                                         //this "?" is saying: is there anyone subscribe my event right now? If yes, then invoke
+                                                         //the event. If not, then don't worry.
+            }
+            return nextCard;
         }
 
         private void InitializeBatches()
