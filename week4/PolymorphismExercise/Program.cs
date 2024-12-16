@@ -57,13 +57,31 @@ namespace PolymorphismExercise
     //implement abstract method to print their noise
     /* Base abstract class */
     abstract class Animal{
-         internal abstract void MakeNoise();
+
+        //fully implemented property
+        private int myVar; //private backing field
+
+        public int MyProperty //public property
+        {
+            get { return myVar; }
+            set { myVar = value; }
+        }
+
+        //init property
+        public int ThisCanBeSetByConstructor { get; init; }
+
+        internal abstract void MakeNoise();
          internal string Im { get; set; } 
     }
 
     /* Derived class Cat */
     class Cat : Animal
     {
+
+        public Cat()
+        {
+            this.ThisCanBeSetByConstructor = 5; //use constructor to initialize property value, once assigned, can't be changed
+        }
         internal override void MakeNoise()
         {
             Console.WriteLine("Meow");
