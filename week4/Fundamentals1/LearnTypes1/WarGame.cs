@@ -120,8 +120,8 @@ namespace Fundamentals1.LearnTypes1
                 };
                 Player.Surrender += (o, e) =>
                 {
-                    //this.Winner = Dealer;
-                    HasWinner?.Invoke(this, Dealer);
+                    this.Winner = Dealer;
+                    //HasWinner?.Invoke(this, Dealer);
                 };
 
                 GotoWar?.Invoke(this, EventArgs.Empty);
@@ -187,6 +187,7 @@ namespace Fundamentals1.LearnTypes1
                 };
                 this._currentGame.HasWinner += (o, winner) =>
                 {
+                    this._currentGame.Winner = winner;
                     if (winner is Dealer d) {
                         this.Balance += _currentGame.Wager;
                     }
