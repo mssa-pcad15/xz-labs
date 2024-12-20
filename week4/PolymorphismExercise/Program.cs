@@ -19,7 +19,26 @@ namespace PolymorphismExercise
             var base64EncodedResult = Convert.ToBase64String(result);
             Console.WriteLine(base64EncodedResult);
 
+            /*  test the extension methods */
+            String s = "Hello World, this is a good day.";
+            var resultString = s.Reverse().ThenTakeEvenLetters().ThenPutSpaceBetweenLetters().ThenCapitalizeTheString();
+            foreach (var item in resultString) {
+                Console.WriteLine(item);
+            }
+
             //PolymorphicAnimal();
+
+            /* call ToHash() extension method */
+            String s2 = "Hello World, this is a good day.";
+            Console.WriteLine($"{s2.ToHash()} using default algo");
+            Console.WriteLine($"{s2.ToHash(SHA512.Create())} using SHA512 algo");
+            Console.WriteLine($"{s2.ToHash(SHA256.Create())} using SHA256 algo");
+
+            /* call HowManyDaysToBirthday() extension method */
+            DateTime today = DateTime.Now;
+            if (today.HowManyDaysToBirthday() > 100)
+                Console.WriteLine("So far away...");
+            else Console.WriteLine("It's around the corner");
         }
 
         private static void PolymorphicAnimal()
@@ -51,11 +70,78 @@ namespace PolymorphismExercise
         }
     }
 
+    /*
+    Reverse() method is an extension method from System.Linq namespace
+    */
+    /* Showcase an extension method that extends IEnumerable of char */
+    /*
+     Using `IEnumerable<char>` allows “Lazy Evaluation”. Here, the “ThenTakeEvenLetters” method does not process all elements upfront. 
+    This is efficient for **large data sets** or **streams of data**, as only the required elements are evaluated.
+    VS Collection, if the input were a `List<char>` (a collection), all elements would need to be stored and processed upfront.
+     */
+    static class MyExtensionMethods
+    {
+        public static IEnumerable<char> ThenTakeEvenLetters(this IEnumerable<char> input)
+        {
+            int counter = 0;
+            foreach (char c in input) //go through each letter one by one
+            {
+                //the yield return keyword in C# is used in iterators to return one element at a time to the caller without requiring the entire collection to be created in memory.
+                if (counter % 2 == 0) yield return c;
+                counter++;
+            }
+        }
+
+        public static IEnumerable<char> ThenPutSpaceBetweenLetters(this IEnumerable<char> input)
+        {
+            foreach (char c in input) //go through each letter one by one
+            {
+                //the yield return keyword in C# is used in iterators to return one element at a time to the caller without requiring the entire collection to be created in memory.
+                yield return c;
+                yield return ' ';
+            }
+        }
+
+        public static IEnumerable<char> ThenCapitalizeTheString(this IEnumerable<char> input)
+        {
+            foreach (char c in input) //go through each letter one by one
+            {
+                //The String(char c, int count) constructor creates a string containing the character c repeated count times.
+                //Here, it creates a new string instance by repeating the character c exactly 1 time.
+                //[0]: Retrieves the first character (at index 0) of the uppercase string. Since new String(c, 1) produces a string with
+                //only one character, ToUpper() will also produce a single-character string, and [0] accesses that single character.
+                yield return new String(c, 1).ToUpper()[0];
+            }
+        }
+
+        public static string ToHash(this string s, HashAlgorithm? algo=null)//extends string class on s, and accept an algo
+        {
+            algo ??= MD5.Create(); //if algo is null, assgin value from MD5.Create.
+                                   //if algo is not null, keep algo's original value
+            byte[] hashBytes = algo.ComputeHash(Encoding.UTF8.GetBytes(s));
+            return Convert.ToBase64String(hashBytes);
+        }
+
+        public static int HowManyDaysToBirthday(this DateTime theDate, int month = 12, int day = 25)
+        {
+            DateTime thisYearBirthday = new DateTime(DateTime.Now.Year, month, day);
+            if (theDate > thisYearBirthday)//If theDate (which is "today") is already after thisYearBirthday
+            {
+                DateTime nextBirthday = new DateTime(DateTime.Now.Year + 1, month, day);
+                return nextBirthday.Subtract(theDate).Days;
+            }
+            else
+                return thisYearBirthday.Subtract(theDate).Days;
+
+        }
+    }
+
+
 
     //create a base abstract class Animal, which contains abstract method MakeNoise
     //create 3 derived child class from Animal, Cat, Dog, Bird
     //implement abstract method to print their noise
-    /* Base abstract class */
+            /* Base abstract class */
     abstract class Animal{
 
         //fully implemented property
