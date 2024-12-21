@@ -10,12 +10,14 @@ namespace LearnDelegate
     //
     public class DelegateDemo
     {
+        public List<double> Results = new List<double>(); //not a property, it is a public field
         public double Multiply(double x, double y) => x * y; //this method fits delegate description, because it takes two
                                                              //doubles and returns a double
         public double Divide(double x, double y) => x / y; //this method fits delegate description, because it takes two
                                                            //doubles and returns a double
-
-
+        
+        public void VoidMultiply(double x, double y) => this.Results.Add(x * y);
+        public void VoidDivide(double x, double y) => this.Results.Add(x/ y);
     }
 
     /* 
@@ -24,4 +26,6 @@ namespace LearnDelegate
         - Returns a double. 
     */
     public delegate double MathOps(double a, double b);
+
+    public delegate void VoidMathOps(double a, double b); //must create this delegate to accommodate the void type method 
 }
