@@ -49,12 +49,15 @@ namespace LearnDelegateTest
             return instance.Invoke(5, 6);
         }
 
-        //public void InvokeThis(VoidMathOps instance)
-        //{
-        //    instance.Invoke(5, 6);
-        //}
+        public void InvokeThis(VoidMathOps instance)
+        {
+            instance.Invoke(5, 6);
+        }
 
         [TestMethod]
+        /* multicasting delegate are usually for methods with no return value because of the issue of only the last method
+         * is returned 
+         */
         public void DelegateVariableSupportsMulticasting()
         {
             DelegateDemo d = new DelegateDemo();
@@ -71,23 +74,22 @@ namespace LearnDelegateTest
             Assert.IsTrue(delegateInstance.GetInvocationList()[1].Method.Name == nameof(d.Divide));
         }
 
-        //[TestMethod]
-        ////public void MulticastDelegateShouldUseVoidReturnAndAccessResultsAsStateElseWhere() {
-        ////    DelegateDemo d = new DelegateDemo();
-        ////    VoidMathOps delegateInstance = d.VoidMultiply;
-        ////    delegateInstance += d.VoidDivide;
+        [TestMethod]
+        public void MulticastDelegateShouldUseVoidReturnAndAccessResultsAsStateElseWhere()
+        {
+            DelegateDemo d = new DelegateDemo();
+            VoidMathOps delegateInstance = d.VoidMultiply;
+            delegateInstance += d.VoidDivide;
 
-        ////    InvokeThis(delegateInstance);
+            InvokeThis(delegateInstance);
 
+            Assert.IsTrue(d.Results.Contains(5.0 / 6));
+            Assert.IsTrue(d.Results.Contains(5 * 6));
+            Assert.IsTrue(delegateInstance.GetInvocationList().Length == 2);
+            Assert.IsTrue(delegateInstance.GetInvocationList()[0].Method.Name == nameof(d.VoidMultiply));
+            Assert.IsTrue(delegateInstance.GetInvocationList()[1].Method.Name == nameof(d.VoidDivide));
 
-
-        ////    Assert.IsTrue(d.Results.Contains(5.0 / 6));
-        ////    Assert.IsTrue(d.Results.Contains(5 * 6));
-        ////    Assert.IsTrue(delegateInstance.GetInvocationList().Length == 2);
-        ////    Assert.IsTrue(delegateInstance.GetInvocationList()[0].Method.Name == nameof(d.Multiply));
-        ////    Assert.IsTrue(delegateInstance.GetInvocationList()[1].Method.Name == nameof(d.Divide));
-
-        ////}
+        }
 
 
 
