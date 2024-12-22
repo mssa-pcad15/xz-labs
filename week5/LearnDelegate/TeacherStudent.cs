@@ -9,18 +9,18 @@ namespace LearnDelegate
 {
     public class Teacher
     {
-        //        public int _counter = 0;
+        public int _counter = 0;
         public event delFlipTable? FlipsTable; // this line declares a field named FlipsTable, "?" indicate delegate field is nullable
                                          // at this point, FlipsTable is a delegate field that does not yet point to any method. It’s just a placeholder.
                                          // add "event" keyword to prevent overwrite, which can only use "+=" and "-="
 
         public void AnswerQuestion(Student who, string question)
         {
-            //if (++_counter > 10)
-            //{
-            //    //GetMad();
-            //    return;
-            //}
+            if (++_counter > 10)
+            {
+                GetsMad();
+                return;
+            }
             who.Listen($"Good Question, {who.Name}");
         }
 

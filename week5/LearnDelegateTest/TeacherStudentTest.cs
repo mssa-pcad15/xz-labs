@@ -51,19 +51,19 @@ namespace LearnDelegateTest
         //        //coding prompt, when asked 10 questions, teacher gets mad
         //        //step 1: create a counter in Teacher Class that increments when student ask question
         //        //step 2: when the counter exceeds 10, teacher flips table
-        //        [TestMethod]
-        //        public void TeacherGetsMadAfter10Questions()
-        //        {
-        //            Teacher t = new();
-        //            Student tom = new("tom");
-        //            tom.AskQuestion += t.AnswerQuestion;
-        //            t.FlipTable += () => Debug.Print("Teacher flipped table");
-        //            t.FlipTable += tom.HandleTableFlip;
+        [TestMethod]
+        public void TeacherGetsMadAfter10Questions()
+        {
+            Teacher t = new();
+            Student tom = new("tom");
+            tom.AskQuestion += t.AnswerQuestion;
+            t.FlipsTable += () => Debug.Print("Teacher flipped table");
+            t.FlipsTable += tom.HandleTableFlip;
 
-        //            for (int i = 0; i <= 10; i++)
-        //            {
-        //                tom.RaiseHand();
-        //            }
-        //        }
+            for (int i = 0; i <= 10; i++)
+            {
+                tom.RaiseHand();
+            }
+        }
     }
     }
