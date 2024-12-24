@@ -90,8 +90,5 @@ namespace LearnDelegateTest
             Assert.IsTrue(delegateInstance.GetInvocationList()[1].Method.Name == nameof(d.VoidDivide));
 
         }
-
-
-
     }
 }
