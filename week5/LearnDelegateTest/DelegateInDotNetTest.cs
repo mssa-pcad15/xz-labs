@@ -48,7 +48,6 @@ namespace LearnDelegateTest
             Assert.AreEqual(1, nameLength.Count());
             Assert.AreEqual("C", nameLength.First().Name);
             /* ################## Use delegate declaration ################## */
-
         }
 
 
@@ -85,12 +84,14 @@ namespace LearnDelegateTest
         public int Age { get; } = Age;
     }
 
+
     //###### | the following delegate declaration can be omit when using Func delegate
     /* ################ Step 1. Delegate Declaration#############  */
     /*
        public delegate bool delFilter<T>(T input);
     */
     /* ################ Delegate Declaration############# */
+
 
 
 

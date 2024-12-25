@@ -20,12 +20,16 @@ namespace LearnDelegate
         public void VoidDivide(double x, double y) => this.Results.Add(x/ y);
     }
 
+    /*################## Use delegate declaration #################*/
+    /*################## Replace by Func Delegate and Action Delegate, hence the declaration can be omit ################ */
     /* 
         A delegate named MathOps is declared, which can "reference" any method that:
         - Takes two double parameters.
         - Returns a double. 
     */
-    public delegate double MathOps(double a, double b);
-
-    public delegate void VoidMathOps(double a, double b); //must create this delegate to accommodate the void type method 
+    /*
+        public delegate double MathOps(double a, double b);
+        public delegate void VoidMathOps(double a, double b); //must create this delegate to accommodate the void type method 
+    */
+    /*################## Use delegate declaration #################*/
 }

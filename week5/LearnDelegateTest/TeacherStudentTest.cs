@@ -57,7 +57,7 @@ namespace LearnDelegateTest
             Teacher t = new();
             Student tom = new("tom");
             tom.AskQuestion += t.AnswerQuestion;
-            t.FlipsTable += () => Debug.Print("Teacher flipped table");
+            t.FlipsTable += () => Debug.Print("Teacher flipped table"); //lambda expression, takes no parameters and returns void
             t.FlipsTable += tom.HandleTableFlip;
 
             for (int i = 0; i <= 10; i++)

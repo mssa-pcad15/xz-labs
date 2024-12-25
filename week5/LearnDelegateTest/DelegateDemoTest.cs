@@ -10,17 +10,25 @@ namespace LearnDelegateTest
         public void InstantiateADelegate()
         {
             DelegateDemo d = new DelegateDemo(); //d is a variable of class, so points to an instance
-            MathOps delegateInstance = d.Multiply; //delegateInstance is a  point to d.Multiply method
+            /*############### Use delegate declaration ###############*/
+            //MathOps delegateInstance = d.Multiply; -- delegateInstance is a point to d.Multiply method
+            /*############### Use delegate declaration ###############*/
+
+            Func<double, double, double> delegateInstance = d.Multiply;
+
             Assert.IsTrue(delegateInstance.Method.Name == "Multiply");//delegate.Method represent the runtime method this instance points to
             Assert.IsTrue(delegateInstance.Method.GetParameters().Length == 2); //two parameters that passed into "Multiply()" method
-
         }
+
 
         [TestMethod]
         public void InstantiateADelegateAndInvoke()
         {
             DelegateDemo d = new DelegateDemo();
-            MathOps delegateInstance = d.Multiply;
+            /*############### Use delegate declaration ###############*/
+            //MathOps delegateInstance = d.Multiply; -- delegateInstance is a point to d.Multiply method
+            /*############### Use delegate declaration ###############*/
+            Func<double, double, double> delegateInstance = d.Multiply;
 
             /*###### 
              * delegates have an Invoke() method that allows you to "explicitly" call the method(s) referenced by the 
@@ -36,20 +44,23 @@ namespace LearnDelegateTest
         public void PassADelegateAsArgumentToMethod()
         {
             DelegateDemo d = new DelegateDemo();
-            MathOps delegateInstance = d.Multiply;
+            /*############### Use delegate declaration ###############*/
+            //MathOps delegateInstance = d.Multiply; -- delegateInstance is a point to d.Multiply method
+            /*############### Use delegate declaration ###############*/
+            Func<double, double, double> delegateInstance = d.Multiply;
 
             double result = InvokeThis(delegateInstance); //We have passed this data into a method many times, now let's see pass instruction into a method
             double expected = 30;
             Assert.AreEqual(expected, result);
         }
 
-        public double InvokeThis(MathOps instance) //this method invokes parameter delegate MathOps without knowing the implementing method, the only thing it knows it
+        public double InvokeThis(Func<double, double, double> instance) //this method invokes parameter delegate MathOps without knowing the implementing method, the only thing it knows it
                                                    //will take two doubles and return a double
         {
             return instance.Invoke(5, 6);
         }
 
-        public void InvokeThis(VoidMathOps instance)
+        public void InvokeThis(Action<double, double> instance)
         {
             instance.Invoke(5, 6);
         }
@@ -62,7 +73,7 @@ namespace LearnDelegateTest
         {
             DelegateDemo d = new DelegateDemo();
             /* "=" vs "+=": if use "=" on "delegateInstance = d.Divide;" then Divide will override Multiply */
-            MathOps delegateInstance = d.Multiply;
+            Func<double, double, double> delegateInstance = d.Multiply;
             delegateInstance += d.Divide;  //I want delegate variable "delegateInstance" point to multiple things, so I need to piggyback using +=
 
             double result = InvokeThis(delegateInstance);
@@ -78,7 +89,7 @@ namespace LearnDelegateTest
         public void MulticastDelegateShouldUseVoidReturnAndAccessResultsAsStateElseWhere()
         {
             DelegateDemo d = new DelegateDemo();
-            VoidMathOps delegateInstance = d.VoidMultiply;
+            Action<double, double> delegateInstance = d.VoidMultiply;
             delegateInstance += d.VoidDivide;
 
             InvokeThis(delegateInstance);
