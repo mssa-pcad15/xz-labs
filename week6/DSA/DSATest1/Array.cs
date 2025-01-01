@@ -53,6 +53,30 @@ namespace DSATest
             //How do we compare 2 array based on members
         }
 
+        [TestMethod]
+        public void JaggedArray()
+        {
+            string[][] array1 = [["1", "2", "3"], ["4", "5", "6"], ["1", "2", "3", "4"]];
+            Assert.AreEqual(3, array1.Length);
+            Assert.AreEqual(3, array1[0].Length);
+            Assert.AreEqual(3, array1[1].Length);
+            Assert.AreEqual(4, array1[2].Length);
+            Assert.AreEqual("5", array1[1][1]);
+
+            int count = 0;
+            string sum = "";
+            foreach(var item in array1) //each item: ["1", "2", "3"]
+            {
+                count += item.Length;
+                foreach (var element in item)
+                    sum += element;
+            }
+
+            Assert.AreEqual(10, count);
+            Assert.AreEqual("1234561234", sum);
+
+        }
+
 
 
 
