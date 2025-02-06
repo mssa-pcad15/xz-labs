@@ -1,0 +1,45 @@
+﻿@page "/"
+@using AWBlazor.EFClass
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@rendermode InteractiveServer
+
+@inject IDbContextFactory<AdventureWorksLt2019Context> dbFactory
+
+<PageTitle>Customers</PageTitle>
+
+<h1>Customer List</h1>
+<QuickGrid Items="gridSource" Pagination="pagination">
+    <PropertyColumn Property="@((Customer cust) => cust.CompanyName)" Sortable="true" />
+    <PropertyColumn Property="@(c => c.FirstName)" Sortable="true" />
+    <PropertyColumn Property="@(c => c.LastName)" Sortable="true" />
+    <PropertyColumn Property="@(c => c.SalesPerson)" Sortable="true" />
+    <PropertyColumn Property="@(c => c.SalesOrderHeaders.Count)" Title="Order Count" Sortable="true" />
+    <PropertyColumn Property="@(c => c.SalesOrderHeaders.Sum(o=>o.TotalDue))" Title="Order Total" Sortable="true" />     
+    <PropertyColumn Property="@(c => c.ModifiedDate)" Format="yyyy-MM-dd" Sortable="true" />
+</QuickGrid>
+
+<Paginator State="pagination" />
+
+@if (customers?.Count > 0)
+{
+    foreach(var aCustomer in customers)
+    {
+        @aCustomer.CompanyName
+    }
+}
+@code{
+    private AdventureWorksLt2019Context? _context = default;
+    IQueryable<Customer>? gridSource;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+    private List<Customer>? customers = default;
+    protected override void OnInitialized()
+    {
+        // _context is a collection, it include Customers, Products...
+        _context = dbFactory.CreateDbContext();
+        // | This is equivalent to a query in SQL, but it is written using LINQ in Entity Framework. Entity Framework acts as 
+        // an Object-Relational Mapper (ORM).
+        gridSource = _context.Customers.Where(c => c.SalesOrderHeaders.Count > 0).Include("SalesOrderHeaders");
+        base.OnInitialized();
+    }
+}

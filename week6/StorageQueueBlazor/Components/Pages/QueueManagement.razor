@@ -1,0 +1,163 @@
+﻿<!-- Display an existing queue, which is a text box that accept the name of a new queue to create -->
+
+
+<!--Queue management needs to render at server side because we need to
+                         keep certain things at server side, S.A. connection string, we don't want to build
+                         the connection string into web assembly and send web assembly to the browser
+                         and expose this connection string-->
+
+<!-- inject a queue client so that we can use it in this file -->
+@page "/queuemanagement" 
+@using Azure.Storage.Queues
+@using Azure.Storage.Queues.Models
+@rendermode InteractiveServer
+@inject QueueServiceClient queueServiceClient
+
+<!-- workflow: 1. get items from Azure Queue storage using queueClient.GetQueuesAsync()  
+            2. use foreach to get each item from this Azure Queue storage and add them to a list
+            3. display each item from this list to the web page.
+-->
+
+
+<div class="container-fluid">
+    <h3 class="text-lg-center">Queue Management</h3>
+    @if (queues.Count == 0)
+    {
+        <p>Loading queue...</p>
+    }
+
+    else
+    {
+        <ul class="list-group m-lg-2">
+            @foreach (var item in queues) //workflow #3
+            {
+                <li class="list-group-item">
+                    <!-- @onchange: When see the "at" sign, means this event is handled by server, not on the client side
+                    means this is a not a JS event, this is a server event
+                    -->
+                    <input type="checkbox" class="form-check-input me-1" id="@item.Name" @onchange="@((e) => handleCheckItem(item.Name,e))" />
+                    <a href="/queueitem/@item.Name">
+                        <label class="form-check-label" for="@item.Name">
+                            @item.Name
+                        </label>
+                    </a>
+                    <span class="badge bg-secondary">@item.MessageCount</span>
+                </li>
+
+            }
+        </ul>
+    }
+</div>
+
+
+<div class="container text-center">
+    <div class="row row-cols-1">
+        <div class="col">
+            <input type="text" class="form-control m-lg-2 w-25" placeholder="name of new queue" id="queue-name" @bind="queueName" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 ">
+            <button type="button" class="btn btn-primary" @onclick="AddNewQueue">Add New Queue</button>
+        </div> 
+        <div class="col-10 align-self-lg-end">
+            <button type="button" class="btn btn-danger" @onclick="DeleteSelectedAsync">Delete Selected Queue</button>
+        </div>
+    </div>
+</div>
+
+    @code {
+         private class QueueItemWithCount
+    {
+        public string Name { get; set; }
+        public int MessageCount { get; set; }
+    }
+
+    /* Q: How to retrieve user text from box and display to web page?
+     * Ans: Whatever go into the text box will be retrievable through this private field "queueName",
+     *      then use @bind to display this information.
+    */
+    private string queueName;
+    List<QueueItemWithCount> queues = new();
+    List<string> queuesToRemove = new();
+     /*
+     * 1) QueueManagement.razor is a Blazor component, In Blazor, .razor files are essentially
+     *  classes derived from the ComponentBase class (or another custom base class if specified).
+     *   When declare a .razor file, behind the scenes, the compiler generates a class for the component.
+     * 2) OnInitializedAsync() is a base class ("ComponentBase") method, here, "QueueManagement" class
+     *  override this base class method.
+     * 3) "var result = queueClient.GetQueuesAsync()" is to retrieve a collection of existing
+     *  queues from a storage account using Azure's Queue Storage API.
+     * 
+    */
+    // | load queues when component is initialized
+    protected override async Task OnInitializedAsync()
+    {
+        await loadQueue(); //self defined method 
+        await base.OnInitializedAsync(); //override the base class method
+    }
+
+    // | add a new queue and reload the list
+    private async Task AddNewQueue()
+    {
+         //queueName is private, but it is within the same as as
+                                                   //AddNewQueue() method, hence it can be accessed directly 
+        
+            // | create a new queue
+            await queueServiceClient.CreateQueueAsync(queueName);
+            // | reload the list of queues
+            await loadQueue();
+            // | notify blazor to re-render UI
+            this.StateHasChanged();
+        
+    }
+
+    // | load all queues from storage account
+    private async Task loadQueue()
+    {
+        // | clear existing list to avoid duplicates
+        queues.Clear();
+       var result = queueServiceClient.GetQueuesAsync(QueueTraits.Metadata);
+
+        await foreach (QueueItem item in result)
+        {
+            var queueClient = queueServiceClient.GetQueueClient(item.Name);
+            var properties = await queueClient.GetPropertiesAsync();
+            queues.Add(new QueueItemWithCount
+                {
+                    Name = item.Name,
+                    MessageCount = properties.Value.ApproximateMessagesCount
+                });
+        }
+    }
+
+     private void handleCheckItem(string queueName,ChangeEventArgs e)
+    {
+        if (queueName is null)
+        {
+            throw new ArgumentNullException(nameof(queueName));
+        }
+
+        if ((bool)e.Value)
+        {
+            queuesToRemove.Add(queueName);
+        }
+        else
+        {
+            queuesToRemove.Remove(queueName);
+        }
+        return;
+    }
+
+    private async Task DeleteSelectedAsync(MouseEventArgs e)
+    {
+        foreach (var item in queuesToRemove)
+        {
+            await queueServiceClient.DeleteQueueAsync(item);
+        }
+        queuesToRemove.Clear();
+        await loadQueue();
+        this.StateHasChanged();
+
+    }
+}
